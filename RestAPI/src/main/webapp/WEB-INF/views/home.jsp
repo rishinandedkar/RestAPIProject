@@ -23,27 +23,63 @@
   <div class="form-group">
   	<div class="row">
   		<div class="col-md-offset-3 col-md-5">
-    <input id="city" class="form-control" type="text" name="cityName" value="" placeholder="Enter the city name"><span id="error"></span>
-     <button type="button" class="btn btn-success btn-lg" id="submitWeather">Submit</button>
+    <input id="city" class="form-control" type="text" name="cityName" value="" placeholder="Enter the city name">
+     <button type="button" class="btn btn-success btn-lg" id="submitWeather">Submit</button><span id="error"></span>
      </div>
     </div>
     </div>
     
     <hr>
 	
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-5">
-		<div class="panel panel-default">
-  <div class="panel-body"><h2>Boston</h2></div>
+			<div class="col-md-4">
+			 <div class="panel panel-default">
+              <div  class="panel-heading" ><span id="cityName"></span> Temperature</div>
+               <div class="panel-body">
+               	<p>Minimum Temperature:<span id="minTemp"></span></p>
+               	<p>Maximum Temperature:<span id="maxTemp"></span></p>
+               </div>
+             </div>
   <hr>
-  <img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png'>
+  <!--  <img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png'>-->
   <!-- //real-time temperature
   //description of weather -->
-</div>
-</div>
+			</div>
+			
+			<div class="col-md-4">
+			 <div class="panel panel-default">
+              <div  class="panel-heading" >Wind and Humidity Information</div>
+               <div class="panel-body">
+               	<p>Wind Speed:<span id="windSpeed"></span></p>
+               	<p>Humidity:<span id="humidity"></span></p>
+               </div>
+             </div>
+             </div>
+             
+             <div class="col-md-4">
+			  <div class="panel panel-default">
+               <div  class="panel-heading" >Pressure Information</div>
+                <div class="panel-body">
+               	 <p >Pressure on Sea Level:<span id="seaLevelTemperature"></span></p>
+               	 <p>Pressure on Ground Level:<span id="grdLevelTemperature"></span></p>
+               </div>
+             </div>
+             </div>
+             
+              <div class="col-md-12">
+			 <div class="panel panel-default">
+              <div  class="panel-heading" >Other Important Information</div>
+               <div class="panel-body">
+               	<p><span>Cloudiness:<span id="cloudiness"></span></span> | <span>Rain:<span id="rain"></span></span> | <span>Snow:<span id="snow"></span></span> | <span>Visibility:<span id="visibility"></span></span> | <span>Sunrise Time:<span id="sunRise"></span></span> | <span>Sunset Time:<span id="sunSet"></span></span>
+               </div>
+             </div>
+             </div>
 
-<div class="col-md-5">
+			<!-- <input type="text" id = "weather1">
+			<input type="text" id = "weather2">
+			<input type="text" id = "weather3"> -->
+<div class="col-md-4">
 	<!-- //main.pressure
 	//wind.speed
 	//wind.deg
@@ -81,7 +117,12 @@
 
 	            success:function(data){
 					var widget = showData(data);
-					
+					console.log(data.main.humidity);
+					document.getElementById("cityName").innerHTML = data.name;
+					document.getElementById("minTemp").innerHTML = data.main.temp_min;
+					document.getElementById("maxTemp").innerHTML = data.main.temp_max + "C";
+					document.getElementById("windSpeed").innerHTML = data.wind.speed;
+
 					$("#show").html(widget);
 					$("#city").val("");
 	            }
@@ -99,5 +140,20 @@
 
   }
 
+  
+  /* var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+  url += '?' + $.param({
+    'api-key': "7a919279504f45e6a1623364fab82fad",
+    'q': "Northeastern University"
+  });
+  $.ajax({
+    url: url,
+    method: 'GET',
+  }).done(function(result) {
+    console.log(result);
+  }).fail(function(err) {
+    throw err;
+  }); */
+  
   </script>
 </html>
