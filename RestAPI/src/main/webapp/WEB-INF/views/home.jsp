@@ -30,15 +30,16 @@
     </div>
     
     <hr>
-	
+			<h2>Weather Report <span id="cityName"></span></h2>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-4">
 			 <div class="panel panel-default">
-              <div  class="panel-heading" ><span id="cityName"></span> Temperature</div>
+              <!-- <div  class="panel-heading" ><span id="cityName"></span></div> -->
                <div class="panel-body">
-               	<p>Minimum Temperature:<span id="minTemp"></span></p>
-               	<p>Maximum Temperature:<span id="maxTemp"></span></p>
+               	<p>Current Temperature:<span id="minTemp"></span></p>
+               	<p>Description:<span id="description"></span></p>
+               	<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png'>
                </div>
              </div>
   <hr>
@@ -49,8 +50,8 @@
 			
 			<div class="col-md-4">
 			 <div class="panel panel-default">
-              <div  class="panel-heading" >Wind and Humidity Information</div>
-               <div class="panel-body">
+<!--               <div  class="panel-heading" >Wind and Humidity Information</div>
+ -->               <div class="panel-body">
                	<p>Wind Speed:<span id="windSpeed"></span></p>
                	<p>Humidity:<span id="humidity"></span></p>
                </div>
@@ -59,10 +60,9 @@
              
              <div class="col-md-4">
 			  <div class="panel panel-default">
-               <div  class="panel-heading" >Pressure Information</div>
-                <div class="panel-body">
-               	 <p >Pressure on Sea Level:<span id="seaLevelTemperature"></span></p>
-               	 <p>Pressure on Ground Level:<span id="grdLevelTemperature"></span></p>
+<!--                <div  class="panel-heading" >Pressure Information</div>
+ -->                <div class="panel-body">
+               	 <p >Atmospheric Pressure:<span id="pressure"></span></p>
                </div>
              </div>
              </div>
@@ -71,7 +71,7 @@
 			 <div class="panel panel-default">
               <div  class="panel-heading" >Other Important Information</div>
                <div class="panel-body">
-               	<p><span>Cloudiness:<span id="cloudiness"></span></span> | <span>Rain:<span id="rain"></span></span> | <span>Snow:<span id="snow"></span></span> | <span>Visibility:<span id="visibility"></span></span> | <span>Sunrise Time:<span id="sunRise"></span></span> | <span>Sunset Time:<span id="sunSet"></span></span>
+               	<p><span>Cloudiness:<span id="cloudiness"></span></span> | <span>Sunrise Time:<span id="sunRise"></span></span> | <span>Sunset Time:<span id="sunSet"></span></span>
                </div>
              </div>
              </div>
@@ -117,11 +117,26 @@
 
 	            success:function(data){
 					var widget = showData(data);
-					console.log(data.main.humidity);
-					document.getElementById("cityName").innerHTML = data.name;
-					document.getElementById("minTemp").innerHTML = data.main.temp_min;
-					document.getElementById("maxTemp").innerHTML = data.main.temp_max + "C";
-					document.getElementById("windSpeed").innerHTML = data.wind.speed;
+					console.log(data);
+					document.getElementById("cityName").innerHTML = "of&nbsp" + data.name + "," +data.sys.country;
+					document.getElementById("minTemp").innerHTML = data.main.temp + "&nbspCelsius";
+					document.getElementById("windSpeed").innerHTML = data.wind.speed+ "&nbspmeters/second";
+					document.getElementById("humidity").innerHTML = data.main.humidity + "%";
+					document.getElementById("pressure").innerHTML = data.main.pressure + "&nbsphPa";
+					document.getElementById("cloudiness").innerHTML = data.clouds.all + "%";
+					
+					var sec = data.sys.sunrise;
+					var date = new Date(sec * 1000);
+					var timestr = date.toLocaleTimeString();
+					
+					document.getElementById("sunRise").innerHTML = timestr;
+					
+					var secc = data.sys.sunset;
+					var datec = new Date(secc * 1000);
+					var timestrc = datec.toLocaleTimeString();
+					
+					document.getElementById("sunSet").innerHTML = timestrc;
+					document.getElementById("description").innerHTML = data.weather[0].description;
 
 					$("#show").html(widget);
 					$("#city").val("");
@@ -135,8 +150,7 @@
 	});
   
   function showData(data){
-	  return "<h3><strong>Weather</strong>:"+data.weather[0].main +"<h3>" +
-	         "<h3><strong>Description</strong>:"+data.weather[0].description +"<h3>" ;
+	  return "" ;
 
   }
 
