@@ -30,42 +30,37 @@
     </div>
     
     <hr>
-			<h2>Weather Report <span id="cityName"></span></h2>
+			<center><h2>Weather Report <span id="cityName"></span></h2></center>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-6">
 			 <div class="panel panel-default">
               <!-- <div  class="panel-heading" ><span id="cityName"></span></div> -->
                <div class="panel-body">
-               	<p>Current Temperature:<span id="minTemp"></span></p>
-               	<p>Description:<span id="description"></span></p>
-               	<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png'>
+               	 <div class="col-md-9">
+               		<p>Current Temperature:<span id="minTemp"></span></p>
+               		<p>Description:<span id="description"></span></p>
+               	</div>
+               	<div class="col-md-3">
+               		<span id="show"></span>
+               	</div>
                </div>
              </div>
   <hr>
-  <!--  <img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png'>-->
-  <!-- //real-time temperature
-  //description of weather -->
 			</div>
 			
-			<div class="col-md-4">
+			<div class="col-md-6">
 			 <div class="panel panel-default">
 <!--               <div  class="panel-heading" >Wind and Humidity Information</div>
  -->               <div class="panel-body">
                	<p>Wind Speed:<span id="windSpeed"></span></p>
                	<p>Humidity:<span id="humidity"></span></p>
+               	<p>Atmospheric Pressure:<span id="pressure"></span></p>
+               	
                </div>
              </div>
              </div>
              
-             <div class="col-md-4">
-			  <div class="panel panel-default">
-<!--                <div  class="panel-heading" >Pressure Information</div>
- -->                <div class="panel-body">
-               	 <p >Atmospheric Pressure:<span id="pressure"></span></p>
-               </div>
-             </div>
-             </div>
              
               <div class="col-md-12">
 			 <div class="panel panel-default">
@@ -76,24 +71,13 @@
              </div>
              </div>
 
-			<!-- <input type="text" id = "weather1">
-			<input type="text" id = "weather2">
-			<input type="text" id = "weather3"> -->
-<div class="col-md-4">
-	<!-- //main.pressure
-	//wind.speed
-	//wind.deg
-	//clouds.all
-	//wind.speed.value
-	//visibility.value -->
-</div>
+			
+
 </div>
 </div>
   
-		<!-- api.openweathermap.org/data/2.5/find?q=London&type=accurate&mode=json&APPID="0e289b8f60ce5d3ae3d17b7043d83d00" -->
+<div id="news"></div>
 
-  <!-- Enter City name: <input id="city" type="text" name="cityName" value="">
-  <button type="button" id="submitWeather">Submit</button> -->
 
   <div id="show"></div>
   
@@ -117,7 +101,7 @@
 
 	            success:function(data){
 					var widget = showData(data);
-					console.log(data);
+					/* console.log(data); */
 					document.getElementById("cityName").innerHTML = "of&nbsp" + data.name + "," +data.sys.country;
 					document.getElementById("minTemp").innerHTML = data.main.temp + "&nbspCelsius";
 					document.getElementById("windSpeed").innerHTML = data.wind.speed+ "&nbspmeters/second";
@@ -137,7 +121,10 @@
 					
 					document.getElementById("sunSet").innerHTML = timestrc;
 					document.getElementById("description").innerHTML = data.weather[0].description;
+					
+					document.getElementById("news").innerHTML = response.docs[0].headline.print_headline;
 
+					
 					$("#show").html(widget);
 					$("#city").val("");
 	            }
@@ -150,15 +137,15 @@
 	});
   
   function showData(data){
-	  return "" ;
+	  return "<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png'\ width=\'87px'>";
 
   }
 
   
-  /* var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+  var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
   url += '?' + $.param({
     'api-key': "7a919279504f45e6a1623364fab82fad",
-    'q': "Northeastern University"
+    'q': "Boston"
   });
   $.ajax({
     url: url,
@@ -167,7 +154,7 @@
     console.log(result);
   }).fail(function(err) {
     throw err;
-  }); */
+  }); 
   
   </script>
 </html>
